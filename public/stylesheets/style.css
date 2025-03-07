@@ -1,0 +1,25 @@
+* {
+    font-family: Futura;
+    background: rgb(28, 0, 36);
+    background: linear-gradient(90deg, rgba(28, 0, 36, 1) 0%, rgba(9, 121, 106, 1) 35%, rgba(0, 191, 255, 1) 100%);
+    color: white;
+}
+
+p {
+    font-family: Future PT;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+h1 {
+    font-size: 65px;
+   
+}
+#btn {
+    width: 10vw;
+    padding: 15px;
+    border-radius: 25px;
+    background-color: black;
+    color: white;
+    border: none;
+}

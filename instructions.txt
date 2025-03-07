@@ -1,0 +1,32 @@
+1) Initialize a project with npm. => npm init -y
+2) express install. => npm install express
+
+
+  index.js =>
+3)Setting up parsers for form
+4)Setting up ejs for ejs pages.
+    ejs is like forntend for project which is dynamic in nature aslo we can write clculations in it
+    => install ejs form npm
+    => setup ejs as a view engine
+5)seting up public static files
+    these files are nothig but using html css js files for frontend in our node backend
+6) Dynamic Routing
+        dynamic routing
+        How to get data comming from frontend to backend route
+    steps=> 
+    a)Sabse pahele apna url banao browser pr ja ke
+    b)Jo url chaheiye wo url likho aur enter dabao  => ./profile/aditya
+    c)ab uss url route ko index.js mai create kro
+    d)ab kuch bhi response bhjiyee( res.send("response") )
+
+    e)Ab url ko dynamic bananeke liye aapko aisa part dhoond na hai jo baar baar change ho arha hai
+      apne wale case mai profile ke aage ka name change hoga. Tho backend wale route mai ja kr profile ke aage : lagado
+
+
+7) Now we are actually start creating something => TASK CREATION AND MANAGEMENT SYSTEM
+  a)Simple UI contain following things...
+      I. TITLE OF TASK => text box
+      II. Large text box area to discribe task.
+      III. Submit button.
+      IV. 3 recents tasks displaying in turms of cards
+  b)USing tailwindcss
