@@ -4,19 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <title>Edit</title>
+    <title>Edit Task - Task Manager</title>
 </head>
-<body>
-    <div class="min w-full min-h-screen bg-zinc-900 text-white p-10">
-        <form action="/edit" method="post">
-            <a class="text-blue-500 inline-block mt-3 mb-5 ml-2"  href="/">Go Back Home</a>
-            <input class="block w-1/4 rounded-md outline-none px-5 py-3 bg-zinc-800" type="text"
-                placeholder="Previous File Name" name="previous" value="<%= filename%>" name="previous">
-            <input class="block w-1/4 rounded-md outline-none px-5 py-3 bg-zinc-800 mt-4" type="text"
-                placeholder="New file name" name="new">
-            <input class="mt-8 bg-green-600 px-5 py-2 rounded-md" type="submit" value="Confirm">
-            <input class="mt-8 bg-red-600 px-5 py-2 rounded-md ml-5" type="submit" value="Delete" name="delete">
-        </form>
+<body class="bg-zinc-950 text-zinc-100 font-sans antialiased">
+    <div class="min-h-screen max-w-2xl mx-auto px-6 py-12">
+        
+        <header class="mb-8">
+            <a class="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors flex items-center gap-1 mb-4" href="/">
+                ← Back to Dashboard
+            </a>
+            <h1 class="text-3xl font-bold text-white">Edit Task Name</h1>
+            <p class="text-zinc-400 mt-2">Rename your file or remove it from the system.</p>
+        </header>
+
+        <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-xl shadow-2xl">
+            <form action="/edit" method="post" class="space-y-6">
+                
+                <div>
+                    <label class="block text-sm font-medium text-zinc-500 mb-2">Original Filename</label>
+                    <input class="block w-full rounded-lg px-4 py-3 bg-zinc-950 border border-zinc-800 text-zinc-500 cursor-not-allowed" 
+                        type="text" name="previous" value="<%= filename %>" readonly>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-zinc-400 mb-2">New Filename</label>
+                    <input class="block w-full rounded-lg outline-none px-4 py-3 bg-zinc-800 border border-zinc-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-white" 
+                        type="text" placeholder="Enter new name..." name="new" autofocus>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button type="submit" name="action" value="rename" 
+                        class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg transition-colors shadow-lg shadow-blue-900/20">
+                        Confirm Rename
+                    </button>
+                    
+                    <button type="submit" name="action" value="delete" 
+                        class="flex-1 bg-zinc-800 hover:bg-red-900/40 hover:text-red-400 hover:border-red-900 border border-zinc-700 text-zinc-300 font-semibold py-3 rounded-lg transition-all"
+                        onclick="return confirm('Are you sure you want to delete this task?')">
+                        Delete Task
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+        <p class="text-center text-zinc-600 text-xs mt-8">
+            Note: Renaming files may affect existing links to this specific task.
+        </p>
     </div>
 </body>
 </html>
