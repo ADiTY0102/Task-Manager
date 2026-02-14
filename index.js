@@ -7,7 +7,7 @@ const fs = require('fs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //step five 
-app.use(express.static(path.join(__dirname, 'public'))); // _dirname => path to the project + public => path upto public folder
+app.use(express.static(path.join(__dirname, 'public')));    // _dirname => path to the project + public => path upto public folder
 app.set('view engine', 'ejs');  //forth step...
 
 
