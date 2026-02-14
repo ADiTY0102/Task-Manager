@@ -30,3 +30,5 @@
       III. Submit button.
       IV. 3 recents tasks displaying in turms of cards
   b)USing tailwindcss
+
+8) Now today starting Jenkins pipeline using docker
