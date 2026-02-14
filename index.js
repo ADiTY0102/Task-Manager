@@ -65,6 +65,37 @@ app.post("/create", function (req, res) {
         }
     })
 })
+
+
+// This runs on every page load
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("Scripts loaded and DOM ready");
+
+    /**
+     * Use the '?.' operator (Optional Chaining) to prevent errors 
+     * if an element isn't found on a specific page.
+     */
+
+    // 1. Example: Handle the Create Form (Only on Index page)
+    const createForm = document.querySelector('form[action="/create"]');
+    createForm?.addEventListener('submit', () => {
+        console.log("Creating a new task...");
+    });
+
+    // 2. Example: Handle the Edit Form (Only on Edit page)
+    const editForm = document.querySelector('form[action="/edit"]');
+    editForm?.addEventListener('submit', () => {
+        console.log("Processing edit/delete...");
+    });
+
+    // 3. Simple click handler example
+    document.querySelector('#some-button-id')?.addEventListener('click', () => {
+        alert("Button clicked!");
+    });
+});
+
+
+
 app.listen(3000, function () {
     console.log("Server is Live Now");
 })
