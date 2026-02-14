@@ -24,6 +24,27 @@ app.get("/", function (req, res) {
     });
 });
 
+app.post("/create", function (req, res) {
+    const title = req.body.title;
+    const details = req.body.details;
+
+    if (!title || !details) {
+        return res.send("Title and details required");
+    }
+
+    const filePath = path.join(filesDir, title + ".txt");
+
+    fs.writeFile(filePath, details, function (err) {
+        if (err) {
+            console.log("Error creating file", err);
+            return res.send("Error creating task");
+        }
+
+        res.redirect("/");
+    });
+});
+
+
 app.get("/files/:filename", function (req, res) {
     const filePath = path.join(filesDir, req.params.filename);
 
@@ -67,6 +88,6 @@ app.post("/edit", function (req, res) {
     }
 });
 
-app.listen(3000, () => {
-    console.log("Server running on port 3000");
+app.listen(3001, () => {
+    console.log("Server running on port 3001");
 });
