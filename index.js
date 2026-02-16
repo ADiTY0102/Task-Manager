@@ -1,24 +1,43 @@
 const express = require('express');
+const session = require('express-session');
+const flash = require('connect-flash');
 const path = require('path');
-const app = express();
+// const app = require('express')();
 const fs = require('fs');
 
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// define files directory safely (VERY IMPORTANT FOR DOCKER)
+// Define files directory safely
 const filesDir = path.join(__dirname, "files");
 
-// step five
+// Static files and View Engine
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
-// route setup
+// Session & Flash Setup
+app.use(session({
+    secret: 'secret-key', // In production, use a random string
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(flash());
+
+// Global variables for flash messages
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+});
+
+// Routes
 app.get("/", function (req, res) {
     fs.readdir(filesDir, function (err, files) {
         if (err) {
             console.log("Error reading directory", err);
-            return res.send("Error loading files");
+            req.flash('error', 'Could not load tasks.');
+            return res.render("index", { files: [] });
         }
         res.render("index", { files: files });
     });
@@ -29,29 +48,32 @@ app.post("/create", function (req, res) {
     const details = req.body.details;
 
     if (!title || !details) {
-        return res.send("Title and details required");
+        req.flash('error', 'Title and details are required.');
+        return res.redirect("/");
     }
 
-    const filePath = path.join(filesDir, title + ".txt");
+    // Removing spaces from title for the filename
+    const safeTitle = title.split(" ").join('') + ".txt";
+    const filePath = path.join(filesDir, safeTitle);
 
     fs.writeFile(filePath, details, function (err) {
         if (err) {
             console.log("Error creating file", err);
-            return res.send("Error creating task");
+            req.flash('error', 'Failed to create task.');
+            return res.redirect("/");
         }
-
+        req.flash('success', 'Task created successfully!');
         res.redirect("/");
     });
 });
-
 
 app.get("/files/:filename", function (req, res) {
     const filePath = path.join(filesDir, req.params.filename);
 
     fs.readFile(filePath, 'utf-8', function (err, data) {
         if (err) {
-            console.log("Error reading file", err);
-            return res.send("Error reading file");
+            req.flash('error', 'Task not found.');
+            return res.redirect("/");
         }
         res.render("show", { 
             filename: req.params.filename, 
@@ -71,7 +93,11 @@ app.post("/edit", function (req, res) {
     // Delete action
     if (req.body.action === 'delete') {
         fs.unlink(oldPath, (err) => {
-            if (err) console.log("Error deleting file", err);
+            if (err) {
+                req.flash('error', 'Could not delete task.');
+            } else {
+                req.flash('success', 'Task deleted successfully.');
+            }
             res.redirect("/");
         });
     } 
@@ -79,7 +105,11 @@ app.post("/edit", function (req, res) {
     else {
         if (req.body.new && req.body.new !== req.body.previous) {
             fs.rename(oldPath, newPath, (err) => {
-                if (err) console.log("Error renaming file", err);
+                if (err) {
+                    req.flash('error', 'Error renaming task.');
+                } else {
+                    req.flash('success', 'Task renamed successfully!');
+                }
                 res.redirect("/");
             });
         } else {
@@ -89,5 +119,5 @@ app.post("/edit", function (req, res) {
 });
 
 app.listen(3001, () => {
-    console.log("Server running on port 3001");
+    console.log("Server running on http://localhost:3001");
 });
