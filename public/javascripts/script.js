@@ -1,37 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // Toast Logic
+
     const toast = document.getElementById('toast');
-    if (toast) {
-        let hideTimeout;
-        let startTime;
-        let timeRemaining = 3000; // 3 seconds
+    if (!toast) return;
 
-        const startTimer = () => {
-            startTime = Date.now();
-            hideTimeout = setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 500); // Wait for fade out
-            }, timeRemaining);
-        };
+    let timeout;
+    const duration = 3000;
 
-        // Function to pause the timer
-        const pauseTimer = () => {
-            clearTimeout(hideTimeout);
-            // Calculate how much time is left by subtracting elapsed time
-            timeRemaining -= (Date.now() - startTime); 
-        };
-        startTimer();
+    const hideToast = () => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-10px)';
+        setTimeout(() => toast.remove(), 400);
+    };
 
-        toast.addEventListener('mouseenter', pauseTimer);
+    const startTimer = () => {
+        timeout = setTimeout(hideToast, duration);
+    };
 
-        toast.addEventListener('mouseleave', startTimer);
+    const stopTimer = () => {
+        clearTimeout(timeout);
+    };
 
-        toast.addEventListener('click', () => {
-            clearTimeout(hideTimeout);
-            toast.style.opacity = '0';
-            setTimeout(() => toast.remove(), 500);
-        });
-    }
+    // Start auto close
+    startTimer();
 
+    // Pause on hover
+    toast.addEventListener('mouseenter', stopTimer);
+    toast.addEventListener('mouseleave', startTimer);
+
+    // Click to close instantly
+    toast.addEventListener('click', hideToast);
 });

@@ -6,7 +6,7 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <title>Edit Task - Task Manager</title>
 </head>
-<body class="bg-zinc-950 text-zinc-100 font-sans antialiased">
+<body class="bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 text-zinc-100 font-sans antialiased">
     <%- include('toast') %>
     <div class="min-h-screen max-w-2xl mx-auto px-6 py-12">
         
@@ -40,8 +40,7 @@
                     </button>
                     
                     <button type="submit" name="action" value="delete" 
-                        class="flex-1 bg-zinc-800 hover:bg-red-900/40 hover:text-red-400 hover:border-red-900 border border-zinc-700 text-zinc-300 font-semibold py-3 rounded-lg transition-all"
-                        onclick="return confirm('Are you sure you want to delete this task?')">
+                        class="flex-1 bg-zinc-800 hover:bg-red-900/40 hover:text-red-400 hover:border-red-900 border border-zinc-700 text-zinc-300 font-semibold py-3 rounded-lg transition-all">
                         Delete Task
                     </button>
                 </div>

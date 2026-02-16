@@ -1,5 +1,7 @@
 <% if (success && success.length > 0) { %>
     <style>
+        #toast {transition: all 0.4s ease }
+
         .progress-bar { animation: shrink 3s linear forwards; }
         #toast:hover .progress-bar { animation-play-state: paused; }
         @keyframes shrink { from { width: 100%; } to { width: 0%; } }
