@@ -30,7 +30,7 @@ pipeline {
         stage('Run New Container') {
             steps {
                 bat '''
-                docker run -d -p 3000:3000 ^
+                docker run -d -p 3000:3001 ^
                 --name %CONTAINER_NAME% ^
                 -v taskdata:/app/files ^
                 %IMAGE_NAME%
